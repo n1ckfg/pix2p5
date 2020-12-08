@@ -42,7 +42,7 @@ function setup() {
   pixelDensity(1);
 
   // Create a pix2pix method with a pre-trained model
-  pix2pix = ml5.pix2pix('../models/edges2pikachu.pict', modelLoaded);
+  pix2pix = ml5.pix2pix('../models/test.pict', modelLoaded);
 }
 
 // Draw on the canvas when mouse is pressed
