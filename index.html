@@ -1,36 +1,72 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Pix2Pix Edges2Pikachu Example</title>
+	<meta charset="UTF-8">
+	<title>Pix2P5</title>
+	<style>
+        body {
+            font-size: 18px;
+        }
 
-  <script src="./js/libraries/p5.min.js"></script>
-  <script src="./js/libraries/ml5.min.js" type="text/javascript"></script>
+        #container {
+            width: 512px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
 
-  <style></style>
+        .ioblock {
+            width: 256px;
+            height: 256px;
+            position: absolute;
+            border: 1px solid black;
+            top: 0px;
+        }
+
+        #input {
+            left: 0px;
+        }
+
+        #output {   
+            left: 256px;
+        }
+
+        .btn {
+            position: absolute;
+            top: 265px;
+        }
+
+        #clearBtn {
+            left: 0px;
+        }
+
+        #transferBtn {
+            left: 60px;
+        }
+
+        #status {
+            position: absolute;
+            left: 0px;
+            top: 294px;
+            border: 1px solid black;
+            width: 512px;
+            height: 1.5em;
+        }
+    </style>
+    <script src="./js/libraries/p5.min.js"></script>
+    <script src="./js/libraries/ml5.min.js" type="text/javascript"></script>
 </head>
 
 <body>
-  <h1>Pix2Pix Edges2Pichaku Example</h1>
-  <p>1. Wait until the model is loaded</p>
-  <p>2. Press your mouse to draw a Pikachu on the left side of the canvas.</p>
-  <p>3. A colored Pikachu image will automatically appear on the right side of the canvas in ~2 seconds. You could also click the "Transfer" button to generate an new image.</p>
-  <p>4. You could click the "Clear" button to clear the canvas and draw again.</p>
-  <p id="status">Loading Model... Please wait...</p>
-  <div class="flex">
-    <div>
-      <div id="canvasContainer"></div>
-      <div id="btnContainer" class="flex flex-space-between">
-        <button id="clearBtn">Clear</button><br />
-        <button id="transferBtn" class="btn">Transfer</button>
-      </div>
-    </div>
-    <div id="transferContainer">
-    </div>
-    <div id="output"></div>
-  </div>
+	<div id="container">
+		<div class="ioblock" id="input"></div>
+        <div class="ioblock" id="output"></div>
+		<button class="btn" id="clearBtn">Clear</button><br>
+		<button class="btn" id="transferBtn">Transfer</button>
+        <div id="status"></div>
+	</div>
 
-  <script src="./js/sketch.js"></script>
+	<script src="./js/sketch.js"></script>
 </body>
 
 </html>
