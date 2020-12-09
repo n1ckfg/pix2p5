@@ -45,12 +45,7 @@ function setup() {
 	pixelDensity(1);
 
 	// Create a pix2pix method with a pre-trained model
-	try {
-		pix2pix = ml5.pix2pix("../models/test.pict", modelLoaded);
-	} catch (e) {
-		console.log("Loading model from backup source.");
-		pix2pix = ml5.pix2pix("https://fox-gieg.com/patches/github/n1ckfg/pix2p5/models/test.pict", modelLoaded);
-	}
+	pix2pix = ml5.pix2pix("./models/test.pict", modelLoaded);
 }
 
 // Draw on the canvas when mouse is pressed
