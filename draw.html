@@ -9,7 +9,7 @@
         }
 
         #container {
-            width: 512px;
+            width: 514px;
             position: absolute;
             left: 0px;
             top: 0px;
@@ -55,8 +55,6 @@
     </style>
     <script src="./js/libraries/p5.min.js"></script>
     <script src="./js/libraries/ml5.min.js"></script>
-    <script src="./js/libraries/opencv.js"></script>
-    <script src="./js/libraries/p5.cv.min.js"></script> 
 </head>
 
 <body>
@@ -64,7 +62,8 @@
 		<div class="ioblock" id="input"></div>
         <div class="ioblock" id="output"></div>
 		<button class="btn" id="clearBtn">Clear</button><br>
-		<button class="btn" id="transferBtn">Transfer</button>
+		<!--<button class="btn" id="transferBtn">Transfer</button>-->
+        <div style="position: absolute; top: 326px; z-index: 1;"><a href="webcam.html">webcam</a></div>
         <div id="status"></div>
 	</div>
 
@@ -86,20 +85,12 @@
         // The pre-trained Edges2Pikachu model is trained on 256x256 images
         // So the input images can only be 256x256 or 512x512, or multiple of 256
         const SIZE = 256;
-        let inputImg, inputCanvas, outputContainer, canvasElement, statusMsg, pix2pix, clearBtn, transferBtn;
-        let modelReady = false;
-        let isTransfering = false;
-
-        let video, cv1, mat1, contourFinder;
+        let inputImg, inputCanvas, outputContainer, canvasElement, statusMsg, pix2pix, clearBtn, transferBtn, modelReady = false, isTransfering = false;
 
         function setup() {
             // Create a canvas
             inputCanvas = createCanvas(SIZE, SIZE);
             inputCanvas.parent("input");
-
-            video = createCapture(VIDEO);
-            video.size(SIZE, SIZE);
-            video.hide();
 
             // Display initial input image
             inputImg = loadImage("./images/input.png", drawImage);
@@ -124,54 +115,26 @@
             pixelDensity(1);
 
             // Create a pix2pix method with a pre-trained model
-            pix2pix = ml5.pix2pix("./models/d76_color.pict", modelLoaded);
-
-            p5.cv.onComplete = function() {
-                console.log("Begin initializing CV");
-
-                cv1 = p5.cv.getCvVideoCapture(video);
-                mat1 = p5.cv.getRGBAMat(SIZE, SIZE);
-                contourFinder = new ContourFinder();
-                contourFinder.setMinArea(10).value();
-                contourFinder.setMaxArea(200).value();
-                contourFinder.setThreshold(127).value();
-                contourFinder.setFindHoles(false);
-                contourFinder.setTargetColor(color(255), p5.cv.TrackingColorMode.TRACK_COLOR_HSV);
-            };
+            pix2pix = ml5.pix2pix("./models/test.pict", modelLoaded);
         }
 
         // Draw on the canvas when mouse is pressed
         function draw() {
-            if (p5.cv.isReady) {
-                // read from CV Capture into myMat
-                cv1.read(mat1);
-
-                // search for contours in the latest frame
-                contourFinder.findContours(mat1);
-                console.log("Found " + contourFinder.size() + " contours");
-                
-                // display Mat
-                p5.cv.drawMat(mat1, 0, 0);
-                // draw contours
-                contourFinder.draw();
+            if (mouseIsPressed) {
+                line(mouseX, mouseY, pmouseX, pmouseY);
             }
-
-            image(video, 0, 0, 256, 256);
-            transfer();
-            //filter(THRESHOLD, 0.3);
         }
 
         // Whenever mouse is released, transfer the current image if the model is loaded and it"s not in the process of another transformation
         function mouseReleased() {
             if (modelReady && !isTransfering) {
-                //transfer()
+                transfer()
             }
         }
 
         // A function to be called when the models have loaded
         function modelLoaded() {
             // Show "Model Loaded!" message
-            console.log("Model loaded!");
             statusMsg.html("Model loaded!");
 
             // Set modelReady to true
@@ -188,7 +151,7 @@
 
         // Draw the input image to the canvas
         function drawImage() {
-            image(video, 0, 0);
+            image(inputImg, 0, 0);
         }
 
         // Clear the canvas
