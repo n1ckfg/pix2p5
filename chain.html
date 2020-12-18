@@ -56,7 +56,7 @@
     <script src="./js/libraries/p5.min.js"></script>
     <script src="./js/libraries/ml5.min.js"></script>
     <script src="./js/libraries/opencv.js"></script>
-    <script src="./js/libraries/p5.cv.min.js"></script> 
+    <script src="./js/libraries/p5.cv.js"></script> 
 </head>
 
 <body>
@@ -126,18 +126,19 @@
             pixelDensity(1);
 
             // Create a pix2pix method with a pre-trained model
-            pix2pix1 = ml5.pix2pix("./models/d76_mix.pict", function() {
+            pix2pix1 = ml5.pix2pix("./models/nick_draw.pict", function() {
                 console.log("Model 1/2 loaded!");
                 statusMsg.html("Model 1/2 loaded!");
                 model1Ready = true;
-            });
-            pix2pix2 = ml5.pix2pix("./models/nick_draw.pict", function() {
-                console.log("Model 2/2 loaded!");
-                statusMsg.html("Model 2/2 loaded!");
-                model2Ready = true;
 
-                transferBtn.mousePressed(function() {
-                    transfer();
+                pix2pix2 = ml5.pix2pix("./models/d76_mix.pict", function() {
+                    console.log("Model 2/2 loaded!");
+                    statusMsg.html("Model 2/2 loaded!");
+                    model2Ready = true;
+
+                    transferBtn.mousePressed(function() {
+                        transfer();
+                    });
                 });
             });
 
@@ -157,7 +158,7 @@
 
         // Draw on the canvas when mouse is pressed
         function draw() {
-            //cvLoaded();
+            cvLoaded();
             modelsLoaded();
 
             image(video, 0, 0, 256, 256);

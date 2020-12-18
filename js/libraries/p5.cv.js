@@ -3365,8 +3365,8 @@ var ContourFinder = function () {
 
       for (var i = 0; i < polylinesSize; i++) {
         p5.cv.drawVectors(this.polylines[i]);
-        var boundingRect = this.getBoundingRect(i);
-        rect(boundingRect.x, boundingRect.y, boundingRect.width, boundingRect.height);
+        //var boundingRect = this.getBoundingRect(i);
+        //rect(boundingRect.x, boundingRect.y, boundingRect.width, boundingRect.height);
       }
 
       pop();
