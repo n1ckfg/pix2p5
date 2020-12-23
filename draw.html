@@ -29,6 +29,7 @@
 
         #output {   
             left: 256px;
+            pointer-events: none;
         }
 
         .btn {
@@ -110,8 +111,6 @@
                 clearCanvas();
             });
 
-            // Set stroke to black
-            stroke(0);
             pixelDensity(1);
 
             // Create a pix2pix method with a pre-trained model
@@ -121,7 +120,20 @@
         // Draw on the canvas when mouse is pressed
         function draw() {
             if (mouseIsPressed) {
-                line(mouseX, mouseY, pmouseX, pmouseY);
+                let avgX = (mouseX + pmouseX) / 2;
+                let avgY = (mouseY + pmouseY) / 2;
+
+                stroke(0,22);
+                strokeWeight(8);
+                line(mouseX, mouseY, avgX, avgY);
+                strokeWeight(5.5);
+                line(avgX, avgY, pmouseX, pmouseY);
+
+                stroke(0);
+                strokeWeight(2);
+                line(mouseX, mouseY, avgX, avgY);
+                strokeWeight(1.5);
+                line(avgX, avgY, pmouseX, pmouseY);
             }
         }
 
